@@ -1,18 +1,18 @@
 # Name of your application. Used to uniquely configure containers.
-service: my-app
+service: kamal-playground
 
 # Name of the container image.
-image: user/my-app
+image: kasku/kamal-playground
 
 # Deploy to these servers.
 servers:
-  - 192.168.0.1
+  - 138.2.144.127
 
 # Credentials for your image host.
 registry:
   # Specify the registry server, if you're not using Docker Hub
   # server: registry.digitalocean.com / ghcr.io / ...
-  username: my-user
+  username: kasku
 
   # Always use an access token rather than real password when possible.
   password:
@@ -27,41 +27,39 @@ registry:
 #     - RAILS_MASTER_KEY
 
 # Use a different ssh user than root
-# ssh:
-#   user: app
+ssh:
+  user: ubuntu
 
 # Configure builder setup.
-# builder:
-#   args:
-#     RUBY_VERSION: 3.2.0
+builder:
+  args:
+    RUBY_VERSION: 3.2.2
 #   secrets:
 #     - GITHUB_TOKEN
-#   remote:
-#     arch: amd64
-#     host: ssh://app@192.168.0.1
+  remote:
+   arch: amd64
+   host: ssh://ubuntu@138.2.144.127
 
 # Use accessory services (secrets come from .env).
-# accessories:
-#   db:
-#     image: mysql:8.0
-#     host: 192.168.0.2
-#     port: 3306
-#     env:
-#       clear:
-#         MYSQL_ROOT_HOST: '%'
-#       secret:
-#         - MYSQL_ROOT_PASSWORD
-#     files:
-#       - config/mysql/production.cnf:/etc/mysql/my.cnf
-#       - db/production.sql:/docker-entrypoint-initdb.d/setup.sql
-#     directories:
-#       - data:/var/lib/mysql
-#   redis:
-#     image: redis:7.0
-#     host: 192.168.0.2
-#     port: 6379
-#     directories:
-#       - data:/data
+accessories:
+  db:
+    image: postgres:16-alpine
+    host: 138.2.144.127
+    port: 3306
+    env:
+      secret:
+        - POSTGRES_DATABASE
+        - POSTGRES_USER
+        - POSTGRES_PASSWORD
+    directories:
+      - ./data/db:/var/lib/postgresql/data
+      - ./data/dbdumps:/dbdumps
+  redis:
+    image: redis:7.0
+    host: 138.2.144.127
+    port: 6379
+    directories:
+      - data:/data
 
 # Configure custom arguments for Traefik
 # traefik:
