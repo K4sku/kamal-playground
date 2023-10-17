@@ -50,8 +50,6 @@ accessories:
         POSTGRES_USER: kamal_playground
         POSTGRES_DATABASE_NAME: kamal_playground_production
       secret:
-        - POSTGRES_DATABASE_NAME
-        - POSTGRES_USER
         - POSTGRES_PASSWORD
     directories:
       - ./data/db:/var/lib/postgresql/data
