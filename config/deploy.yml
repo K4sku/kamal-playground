@@ -16,7 +16,8 @@ registry:
 # Remember to run `kamal env push` after making changes!
 env:
  clear:
-   DB_HOST: 138.2.144.127
+   POSTGRES_HOST: 138.2.144.127
+   POSTGRES_PORT: 3306
    POSTGRES_USER: kamal_playground
    POSTGRES_DATABASE_NAME: kamal_playground_production
  secret:
